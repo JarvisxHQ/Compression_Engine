@@ -1,12 +1,13 @@
 #include <iostream>
 #include <string>
-#include "bin/Frequency.cpp"
+#include "bin/Text.cpp"
 using namespace std; 
 
 int main() {
     string inLine; 
+    cout << "> "; 
     getline(cin, inLine); 
-    Frequency F1(inLine); 
-    F1.printFrequency(); 
+    Text newText(inLine);
+    //newText.printFrequency(); 
     return 0; 
 }

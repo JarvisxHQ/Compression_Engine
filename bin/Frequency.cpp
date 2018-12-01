@@ -2,9 +2,8 @@
 #include <vector>
 #include <string>
 #include <algorithm>
-using namespace std;
-
 #include "Frequency.h"
+using namespace std;
 
 Frequency::Frequency(const string& text) {
     if(text.length() != 0) {
@@ -22,23 +21,17 @@ Frequency::Frequency(const string& text) {
             }
             if(isCharUnique) this->frequencies.push_back(make_pair(currChar, 1)); 
         }
+        sort(this->frequencies.begin(), this->frequencies.end(), [](pair<char, int>& vectorA, pair<char, int>& vectorB) {
+            if(vectorA.second == vectorB.second) return vectorA.first > vectorB.first;
+            return vectorA.second > vectorB.second; 
+        });
     } else {
         cout << ">>> NOT AN VALID STRING  <<<" << endl; 
     }
-    sort(this->frequencies.begin(), this->frequencies.end(), [](pair<char, int>& vectorA, pair<char, int>& vectorB) {
-        if(vectorA.second == vectorB.second) return vectorA.first < vectorB.first;
-        return vectorA.second < vectorB.second; 
-    });
 }
 
 Frequency::~Frequency() {
     // Empty
 }
 
-auto Frequency::getFrequency() { return this->frequencies; }
-
-void Frequency::printFrequency() {
-    for(auto indexFreq : this->frequencies) {
-        cout << indexFreq.first << " " << indexFreq.second << endl; 
-    }
-}
+vector<pair<char, int> > Frequency::getFrequency() { return this->frequencies; }
