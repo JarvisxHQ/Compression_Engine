@@ -5,41 +5,26 @@
 
 Text::Text(const string& text) : Frequency(text) {
     this->text = text; 
-    if(text.size() != 0) createQueue(getFrequency());
+    if(text.size() != 0) {
+        createQueue(getFrequency());
+        //printLUT(); 
+        encode(); 
+    }
 }
 
 Text::~Text() {
     // Empty
 }
 
-void Text::createQueue(vector<pair<char, int> > frequencies) {
-    this->queue.resize(frequencies.size());
-    for(int index = 0; index < frequencies.size(); index++) {
-        this->queue[index].first = frequencies[index].first; 
-        this->queue[index].second = frequencies[index].second; 
+void Text::encode() {
+    for(auto indexC : this->text) {
+        for(auto indexLut : getLUT()) {
+            if(indexC == indexLut.first) {
+                for(auto indexBool : indexLut.second) cout << indexBool; 
+            }
+        }
     }
-    printQueue();
-    while(this->queue.size() > 1) modifyQueue();
-    if(this->queue.size() == 1) {
-        cout << "Root >> " << queue[0].first << "- " << queue[0].second << endl; 
-        return; 
-    }
-    printQueue(); 
-}
-
-void Text::modifyQueue() {
-    pair <string, int> pairA = queue.back();
-    queue.pop_back(); 
-    pair <string, int> pairB = queue.back(); 
-    queue.pop_back(); 
-    cout << "Pair A >> " << pairA.first << "- " << pairA.second << endl; 
-    cout << "Pair B >> " << pairB.first << "- " << pairB.second << endl;
-    this->queue.insert(queue.begin(), make_pair(pairA.first + pairB.first, pairA.second + pairB.second)); 
-    sort(this->queue.begin(), this->queue.end(), [](pair<string, int>& vectorA, pair<string, int>& vectorB) {
-        return vectorA.second > vectorB.second; 
-    });
-    printQueue(); 
-    cout << endl;
+    cout << endl; 
 }
 
 void Text::printFrequency() {
@@ -49,7 +34,17 @@ void Text::printFrequency() {
 }
 
 void Text::printQueue() {
-    for(auto indexQueue : this->queue) {
+    for(auto indexQueue : getQueue()) {
         cout << indexQueue.first << "- " << indexQueue.second << endl; 
+    }
+}
+
+void Text::printLUT() {
+    for(auto indexLUT : getLUT()) {
+        cout << indexLUT.first << " > ";
+        for(auto indexBool : indexLUT.second) {
+            cout << indexBool; 
+        }
+        cout << endl;  
     }
 }

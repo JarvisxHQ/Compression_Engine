@@ -4,19 +4,19 @@
 #include <vector>
 #include <string>
 #include "Frequency.cpp"
+#include "Queue.cpp"
 using namespace std; 
 
-class Text : public Frequency {
+class Text : public Frequency, public Queue {
     private:
         string text; 
-        vector<pair <string, int> > queue; 
-        void createQueue(vector<pair<char, int> > frequencies); 
-        void modifyQueue(); 
     public:
         Text(const string& text); 
         ~Text();
+        void encode(); 
         virtual void printFrequency(); 
-        void printQueue() ; 
+        void printQueue(); 
+        void printLUT(); 
 }; 
 
 #endif _TEXT_H
