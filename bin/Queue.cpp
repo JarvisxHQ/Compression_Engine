@@ -24,6 +24,10 @@ void Queue::createQueue(vector<pair<char, int> > frequencies) {
         this->LUT[index].first = frequencies[index].first; 
         this->queue[index].second = frequencies[index].second; 
     }
+    if(this->queue.size() == 1) {
+        this->LUT[0].second.push_back(false); 
+        return; 
+    }
     while(this->queue.size() > 1) modifyQueue();
     sort(this->LUT.begin(), this->LUT.end(), [](pair<char, vector<bool>>& vectorA, pair<char, vector<bool>>& vectorB) {
         if(vectorA.second.size() == vectorB.second.size()) {
