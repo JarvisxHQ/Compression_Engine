@@ -7,7 +7,7 @@ Text::Text(const string& text) : Frequency(text) {
     this->text = text; 
     if(text.size() != 0) {
         createQueue(getFrequency());
-        //printLUT(); 
+        printLUT(); 
         encode(); 
     }
 }

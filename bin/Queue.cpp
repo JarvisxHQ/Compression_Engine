@@ -25,9 +25,15 @@ void Queue::createQueue(vector<pair<char, int> > frequencies) {
         this->queue[index].second = frequencies[index].second; 
     }
     while(this->queue.size() > 1) modifyQueue();
-    if(this->queue.size() == 1) {
-        return; 
-    } 
+    sort(this->LUT.begin(), this->LUT.end(), [](pair<char, vector<bool>>& vectorA, pair<char, vector<bool>>& vectorB) {
+        if(vectorA.second.size() == vectorB.second.size()) {
+            auto refPairA = vectorA.second; auto refPairB = vectorB.second;
+            for(auto itr1 = refPairA.begin(), itr2 = refPairB.begin(); itr1 != refPairA.end() && itr2 != refPairB.end(); ++itr1, ++itr2) {
+                if(*itr1 != *itr2) return *itr1 < *itr2; 
+            }
+        }
+        return vectorA.second.size() < vectorB.second.size(); 
+    });
 }
 
 void Queue::modifyQueue() {
